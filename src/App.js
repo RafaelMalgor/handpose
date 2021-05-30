@@ -64,12 +64,13 @@ function App() {
           const maxConfidenceIndex = confidence.indexOf(Math.max(...confidence));
 
           setCurrentGesture(gesture.gestures[maxConfidenceIndex].name);
-          const ctx = canvasRef.current.getContext("2d");
-            drawHand(hand, ctx);         
+          const ctx = canvasRef.current.getContext("2d");   
         }
       } else {
         setCurrentGesture("unknown");
       }
+
+      drawHand(hand, ctx);
     }
   };
 
