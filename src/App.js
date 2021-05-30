@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as handpose from '@tensorflow-models/handpose';
 import Webcam from 'react-webcam';
@@ -19,8 +19,8 @@ function App() {
     "victory": "✌",
     "thumbs_down": "👎",
     "raised_hand": "✋",
-    "metal_hand":"🤟",
-    "horn_hand":"🤘",
+    "metal_hand": "🤟",
+    "horn_hand": "🤘",
     "unknown": "❓",
   };
 
@@ -64,17 +64,21 @@ function App() {
           const maxConfidenceIndex = confidence.indexOf(Math.max(...confidence));
 
           setCurrentGesture(gesture.gestures[maxConfidenceIndex].name);
-          const ctx = canvasRef.current.getContext("2d");   
+
         }
       } else {
         setCurrentGesture("unknown");
       }
 
+      const ctx = canvasRef.current.getContext("2d");
       drawHand(hand, ctx);
     }
   };
+  
+  useEffect(() => {
+    executeHandpose();
+  }, []);
 
-  executeHandpose();
 
   return (
     <div className="App" >
